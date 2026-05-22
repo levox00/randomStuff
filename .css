@@ -13,7 +13,7 @@
 :root {
     /* === ЕДИНСТВЕННАЯ ПЕРЕМЕННАЯ ДЛЯ ТОНИРОВАНИЯ ВСЕЙ ТЕМЫ === */
     /* Замените три числа на любой RGB-цвет (0–255) — все стеклянные поверхности окрасятся */
-    --tint-rgb: 255, 255, 255;   /* белый по умолчанию → попробуйте, например, 150, 200, 255 */
+    --tint-rgb: 255, 177, 248;   /* белый по умолчанию → попробуйте, например, 150, 200, 255 */
 
     /* Фон */
     --app-bg: url(https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExbDR5cmR6ZjYydWxtYmpwc3pwOHBkNmZjbnRldHAxYzQxZDNsbmw1dSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3ov9jWPi1AH2XUfI6Q/giphy.gif);
