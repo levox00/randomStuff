@@ -12,8 +12,12 @@
  
 :root {
     /* === ЕДИНСТВЕННАЯ ПЕРЕМЕННАЯ ДЛЯ ТОНИРОВАНИЯ ВСЕЙ ТЕМЫ === */
-    /* Замените три числа на любой RGB-цвет (0–255) — все стеклянные поверхности окрасятся */
-    --tint-rgb: 255, 177, 248;   /* белый по умолчанию → попробуйте, например, 150, 200, 255 */
+    --tint-rgb: 255, 255, 255;   /* базовый оттенок стеклянных элементов */
+
+    /* === ГЛОБАЛЬНЫЕ НАСТРОЙКИ (меняйте только их) === */
+    --glass-opacity: 1;          /* 0 = полностью прозрачно, 1 = исходная непрозрачность */
+    --bg-tint: transparent;      /* цветная заливка поверх гифки (например, rgba(255,0,0,0.15)) */
+    --text-color: #ffffff;       /* основной цвет текста */
 
     /* Фон */
     --app-bg: url(https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExbDR5cmR6ZjYydWxtYmpwc3pwOHBkNmZjbnRldHAxYzQxZDNsbmw1dSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3ov9jWPi1AH2XUfI6Q/giphy.gif);
@@ -21,10 +25,10 @@
     --blur-other: 30px;
     --brightness-bg: 0.5;
  
-    /* Общие стили — теперь берут цвет из --tint-rgb */
-    --color-main: rgba(var(--tint-rgb), 0.1);
-    --border-main: 1px solid rgba(var(--tint-rgb), 0.1);
-    --boxshadow: inset 0 0 10px rgba(var(--tint-rgb), 0.1);
+    /* Общие стили — теперь прозрачность умножается на --glass-opacity */
+    --color-main: rgba(var(--tint-rgb), calc(0.1 * var(--glass-opacity)));
+    --border-main: 1px solid rgba(var(--tint-rgb), calc(0.1 * var(--glass-opacity)));
+    --boxshadow: inset 0 0 10px rgba(var(--tint-rgb), calc(0.1 * var(--glass-opacity)));
 }
  
  
@@ -36,6 +40,17 @@ body {
     background: var(--app-bg) !important;
     background-position: 15% !important;
     background-size: 105% 105% !important;
+    color: var(--text-color);        /* ← применяем настраиваемый цвет текста */
+}
+
+/* --- Цветная тонировка фона (управляется через --bg-tint) --- */
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: var(--bg-tint);
+    pointer-events: none;
+    z-index: 0;
 }
  
 /* Размытие на фоне */
@@ -59,20 +74,20 @@ body {
     --custom-channel-members-bg: transparent;
     --background-base-low: transparent;
  
-    --bg-brand: rgba(var(--tint-rgb), 0.2);
-    --background-code: rgba(var(--tint-rgb), 0.05);
-    --button-filled-brand-background: rgba(var(--tint-rgb), 0.1);
-    --button-filled-brand-background-hover: rgba(var(--tint-rgb), 0.2);
-    --background-surface-high: rgba(var(--tint-rgb), 0.15);
-    --background-secondary-alt: rgba(var(--tint-rgb), 0.1);
-    --background-modifier-hover: rgba(var(--tint-rgb), 0.15);
-    --background-mod-subtle: rgba(var(--tint-rgb), 0.15);
-    --card-primary-bg: rgba(var(--tint-rgb), 0.15);
-    --bg-base-secondary: rgba(var(--tint-rgb), 0.15);
+    --bg-brand: rgba(var(--tint-rgb), calc(0.2 * var(--glass-opacity)));
+    --background-code: rgba(var(--tint-rgb), calc(0.05 * var(--glass-opacity)));
+    --button-filled-brand-background: rgba(var(--tint-rgb), calc(0.1 * var(--glass-opacity)));
+    --button-filled-brand-background-hover: rgba(var(--tint-rgb), calc(0.2 * var(--glass-opacity)));
+    --background-surface-high: rgba(var(--tint-rgb), calc(0.15 * var(--glass-opacity)));
+    --background-secondary-alt: rgba(var(--tint-rgb), calc(0.1 * var(--glass-opacity)));
+    --background-modifier-hover: rgba(var(--tint-rgb), calc(0.15 * var(--glass-opacity)));
+    --background-mod-subtle: rgba(var(--tint-rgb), calc(0.15 * var(--glass-opacity)));
+    --card-primary-bg: rgba(var(--tint-rgb), calc(0.15 * var(--glass-opacity)));
+    --bg-base-secondary: rgba(var(--tint-rgb), calc(0.15 * var(--glass-opacity)));
  
-    --brand-500: rgba(91, 103, 234, 0.4);            /* не трогаем, это акцентная кнопка */
-    --text-feedback-positive: rgba(var(--tint-rgb), 0.65);
-    --green-360: rgba(var(--tint-rgb), 0.65);
+    --brand-500: rgba(91, 103, 234, 0.4);            /* акцент не меняем */
+    --text-feedback-positive: rgba(var(--tint-rgb), calc(0.65 * var(--glass-opacity)));
+    --green-360: rgba(var(--tint-rgb), calc(0.65 * var(--glass-opacity)));
 }
  
  
@@ -80,14 +95,13 @@ body {
    5. ЗВОНКИ И ГОЛОСОВЫЕ КАНАЛЫ
    ========================================================================== */
  
-/* Фон звонка */
 .visual-refresh .root_bfe55a {
     background: transparent;
 }
  
 .callContainer_cb9592 {
     background: transparent;
-    box-shadow: inset 0 0 10px rgba(var(--tint-rgb), 0.05);
+    box-shadow: inset 0 0 10px rgba(var(--tint-rgb), calc(0.05 * var(--glass-opacity)));
     border-radius: 10px;
     border: var(--border-main);
     margin-left: 10px;
@@ -99,10 +113,9 @@ body {
     background: transparent !important;
 }
  
-/* Демонстрация / просмотр в полноэкранном режиме (fix) */
 .gradientContainer_bfe55a {
     background-image: linear-gradient(
-        rgba(var(--tint-rgb), 0.04) 0%,
+        rgba(var(--tint-rgb), calc(0.04 * var(--glass-opacity))) 0%,
         rgba(0, 0, 0, 0) 50%
     );
 }
@@ -122,9 +135,8 @@ body {
     margin: unset !important;
 }
  
-/* Индикатор говорящего */
 .border__2f4f7.speaking__2f4f7 {
-    box-shadow: 0px 0px 30px 10px rgba(var(--tint-rgb), 0.2) inset;
+    box-shadow: 0px 0px 30px 10px rgba(var(--tint-rgb), calc(0.2 * var(--glass-opacity))) inset;
 }
  
  
@@ -133,7 +145,7 @@ body {
    ========================================================================== */
  
 .menu_c1e9c4 {
-    background: rgba(0, 0, 0, 0.158);   /* тёмный фон меню — можно заменить на rgba(var(--tint-rgb),0.158) для полной тонировки */
+    background: rgba(0, 0, 0, 0.158);
     border: var(--border-main);
 }
  
@@ -150,7 +162,6 @@ body {
     border-radius: 8px;
 }
  
-/* Открытие изображения */
 #image-context[class*="c1e9c47c23f12ca3-menu"] {
     backdrop-filter: blur(var(--blur-other));
 }
@@ -160,7 +171,6 @@ body {
    7. ТУЛТИПЫ
    ========================================================================== */
  
-/* Базовый тултип */
 .tooltip_c36707 {
     background: rgba(0, 0, 0, 0.15) !important;
     backdrop-filter: blur(var(--blur-other));
@@ -171,14 +181,12 @@ body {
     display: none;
 }
  
-/* Тултипы в чате */
 .visual-refresh .wrapper_f7ecac {
     background: transparent;
     backdrop-filter: blur(var(--blur-other));
     border: var(--border-main);
 }
  
-/* Тултипы реакций на сервере */
 .reactionTooltip_b49891 {
     background: rgba(var(--tint-rgb), 0) !important;
     backdrop-filter: blur(var(--blur-other));
@@ -190,12 +198,10 @@ body {
    8. ПРОФИЛИ
    ========================================================================== */
  
-/* Баннер (верх профиля) */
 .banner__68edb {
-    background: rgba(var(--tint-rgb), 0.05) !important;
+    background: rgba(var(--tint-rgb), calc(0.05 * var(--glass-opacity))) !important;
 }
  
-/* Фон модалки профиля и ЛКМ */
 .user-profile-modal,
 .root__24502,
 .inner_c0bea0 {
@@ -205,22 +211,19 @@ body {
  
 .outer_c0bea0,
 .inner_c0bea0 {
-    background: rgba(var(--tint-rgb), 0.05) !important;
+    background: rgba(var(--tint-rgb), calc(0.05 * var(--glass-opacity))) !important;
 }
  
-/* Точка статуса на собственном профиле */
 .outer_ab8609 {
     background: transparent;
 }
  
-/* Карточка аккаунта */
 .accountProfileCard__1fed1 {
     border: var(--border-main);
 }
  
-/* Боковая информация в профиле (было rgba(145,145,145,0.1)) */
 :where(.overlay_c0bea0) {
-    background: rgba(var(--tint-rgb), 0.1);
+    background: rgba(var(--tint-rgb), calc(0.1 * var(--glass-opacity)));
     border: var(--border-main) !important;
 }
  
@@ -237,16 +240,14 @@ body {
     background: transparent !important;
 }
  
-/* Скроллабельный контейнер */
 .scrollableContainer__74017 {
-    background: rgba(var(--tint-rgb), 0.03) !important;
+    background: rgba(var(--tint-rgb), calc(0.03 * var(--glass-opacity))) !important;
     border: var(--border-main);
     box-shadow: var(--boxshadow);
 }
  
-/* Кнопка скачивания файла (hover-группа) */
 .hoverButtonGroup__06ab4 {
-    background: rgba(var(--tint-rgb), 0.1);
+    background: rgba(var(--tint-rgb), calc(0.1 * var(--glass-opacity)));
     border: var(--border-main) !important;
     backdrop-filter: blur(var(--blur-other));
     box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.3);
@@ -259,7 +260,7 @@ body {
  
 .visual-refresh .messagesPopoutWrap_e8b59c,
 .visual-refresh .messageGroupWrapper_e8b59c {
-    background: rgba(var(--tint-rgb), 0.1);   /* было rgba(120,120,120,0.1) */
+    background: rgba(var(--tint-rgb), calc(0.1 * var(--glass-opacity)));
     backdrop-filter: blur(10px);
 }
  
@@ -282,9 +283,8 @@ body {
    11. ПАНЕЛИ УПРАВЛЕНИЯ
    ========================================================================== */
  
-/* --- Нижняя панель: статус звонка и т.д. --- */
 .visual-refresh .panels__5e434 {
-    background: rgba(var(--tint-rgb), 0.03) !important;
+    background: rgba(var(--tint-rgb), calc(0.03 * var(--glass-opacity))) !important;
     border: var(--border-main) !important;
     backdrop-filter: blur(var(--blur-bg));
     box-shadow: var(--boxshadow);
@@ -294,7 +294,6 @@ body {
     background: transparent !important;
 }
  
-/* --- Панель управления в голосовом канале --- */
 .buttonSection__1405b {
     background:
         radial-gradient(90.42% 100% at 50% 100%, rgba(19, 18, 18, 0.5) 60%, transparent 100%),
@@ -318,17 +317,14 @@ body {
    12. КНОПКИ И ИНТЕРАКТИВНЫЕ ЭЛЕМЕНТЫ
    ========================================================================== */
  
-/* Кнопка "Прочитать всё" (плагин Vencord ReadAllNotificationsButton) */
 button.vc-ranb-button.button__201d5.lookFilled__201d5.sizeMin__201d5.grow__201d5 {
     border: none;
 }
  
-/* Чекбокс (отмеченный) */
 .container__3f21e.checked__3f21e {
-    background-color: rgba(var(--tint-rgb), 0.24) !important;
+    background-color: rgba(var(--tint-rgb), calc(0.24 * var(--glass-opacity))) !important;
 }
  
-/* Нажатые кнопки (фиолетово-розовый градиент) — оставлен как есть */
 :where(.visual-refresh) .checkbox_f525d3.checked_f525d3 {
     background:
         radial-gradient(90.42% 100% at 50% 100%, rgba(226, 135, 135, 0.5) 60%, transparent 100%),
@@ -341,7 +337,6 @@ button.vc-ranb-button.button__201d5.lookFilled__201d5.sizeMin__201d5.grow__201d5
    13. ПРОГРЕСС-БАРЫ И ИНДИКАТОРЫ
    ========================================================================== */
  
-/* Прогресс-бар громкости (золотой градиент) — оставлен как есть */
 .barFill_a562c8 {
     background:
         radial-gradient(ellipse farthest-corner at right bottom,
@@ -357,38 +352,29 @@ button.vc-ranb-button.button__201d5.lookFilled__201d5.sizeMin__201d5.grow__201d5
    14. ПРОЧЕЕ
    ========================================================================== */
  
-/* --- Выдача демки --- */
- 
-/* Скрыть арт */
 .artContainer_a55fdc {
     display: none !important;
 }
  
-/* Низ / верх */
 .border_a55fdc,
 .modalFooter_a55fdc {
-    background-color: rgba(var(--tint-rgb), 0.05) !important;
+    background-color: rgba(var(--tint-rgb), calc(0.05 * var(--glass-opacity))) !important;
     backdrop-filter: blur(20px);
 }
  
-/* Градиент */
 .visual-refresh .container_a55fdc {
     background:
         radial-gradient(90.42% 100% at 50% 100%, rgba(0, 0, 0, 0) 60%, transparent 100%),
         linear-gradient(270deg, rgba(27, 27, 29, 0.5) 0, rgba(35, 35, 39, 0.5) 100%);
 }
  
- 
-/* --- Смена региона --- */
 .quickSelectPopout_ebaca5 {
-    background: rgba(var(--tint-rgb), 0.15) !important;
+    background: rgba(var(--tint-rgb), calc(0.15 * var(--glass-opacity))) !important;
     backdrop-filter: blur(10px);
 }
  
- 
-/* --- MessageBox --- */
 .root__49fc1 {
-    background: rgba(var(--tint-rgb), 0.15);
+    background: rgba(var(--tint-rgb), calc(0.15 * var(--glass-opacity)));
     backdrop-filter: blur(10px);
 }
  
@@ -396,7 +382,7 @@ button.vc-ranb-button.button__201d5.lookFilled__201d5.sizeMin__201d5.grow__201d5
     background: transparent;
 }
  
- .container_abd9a8{
-    background: rgba(var(--tint-rgb), 0.05);
+.container_abd9a8{
+    background: rgba(var(--tint-rgb), calc(0.05 * var(--glass-opacity)));
     backdrop-filter: blur(10px);
- }
+}
