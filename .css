@@ -11,16 +11,20 @@
    ========================================================================== */
  
 :root {
+    /* === ЕДИНСТВЕННАЯ ПЕРЕМЕННАЯ ДЛЯ ТОНИРОВАНИЯ ВСЕЙ ТЕМЫ === */
+    /* Замените три числа на любой RGB-цвет (0–255) — все стеклянные поверхности окрасятся */
+    --tint-rgb: 255, 255, 255;   /* белый по умолчанию → попробуйте, например, 150, 200, 255 */
+
     /* Фон */
     --app-bg: url(https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExbDR5cmR6ZjYydWxtYmpwc3pwOHBkNmZjbnRldHAxYzQxZDNsbmw1dSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3ov9jWPi1AH2XUfI6Q/giphy.gif);
     --blur-bg: 80px;
     --blur-other: 30px;
     --brightness-bg: 0.5;
  
-    /* Общие стили */
-    --color-main: rgba(255, 255, 255, 0.1);
-    --border-main: 1px solid rgba(255, 255, 255, 0.1);
-    --boxshadow: inset 0 0 10px rgba(100, 100, 100, 0.1);
+    /* Общие стили — теперь берут цвет из --tint-rgb */
+    --color-main: rgba(var(--tint-rgb), 0.1);
+    --border-main: 1px solid rgba(var(--tint-rgb), 0.1);
+    --boxshadow: inset 0 0 10px rgba(var(--tint-rgb), 0.1);
 }
  
  
@@ -55,20 +59,20 @@ body {
     --custom-channel-members-bg: transparent;
     --background-base-low: transparent;
  
-    --bg-brand: rgba(255, 255, 255, 0.2);
-    --background-code: rgba(255, 255, 255, 0.05);
-    --button-filled-brand-background: rgba(255, 255, 255, 0.1);
-    --button-filled-brand-background-hover: rgba(255, 255, 255, 0.2);
-    --background-surface-high: rgba(255, 255, 255, 0.15);
-    --background-secondary-alt: rgba(255, 255, 255, 0.1);
-    --background-modifier-hover: rgba(255, 255, 255, 0.15);
-    --background-mod-subtle: rgba(255, 255, 255, 0.15);
-    --card-primary-bg: rgba(255, 255, 255, 0.15);
-    --bg-base-secondary: rgba(255, 255, 255, 0.15);
+    --bg-brand: rgba(var(--tint-rgb), 0.2);
+    --background-code: rgba(var(--tint-rgb), 0.05);
+    --button-filled-brand-background: rgba(var(--tint-rgb), 0.1);
+    --button-filled-brand-background-hover: rgba(var(--tint-rgb), 0.2);
+    --background-surface-high: rgba(var(--tint-rgb), 0.15);
+    --background-secondary-alt: rgba(var(--tint-rgb), 0.1);
+    --background-modifier-hover: rgba(var(--tint-rgb), 0.15);
+    --background-mod-subtle: rgba(var(--tint-rgb), 0.15);
+    --card-primary-bg: rgba(var(--tint-rgb), 0.15);
+    --bg-base-secondary: rgba(var(--tint-rgb), 0.15);
  
-    --brand-500: rgba(91, 103, 234, 0.4);
-    --text-feedback-positive: rgba(255, 255, 255, 0.65);
-    --green-360: rgba(255, 255, 255, 0.65);
+    --brand-500: rgba(91, 103, 234, 0.4);            /* не трогаем, это акцентная кнопка */
+    --text-feedback-positive: rgba(var(--tint-rgb), 0.65);
+    --green-360: rgba(var(--tint-rgb), 0.65);
 }
  
  
@@ -83,7 +87,7 @@ body {
  
 .callContainer_cb9592 {
     background: transparent;
-    box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.05);
+    box-shadow: inset 0 0 10px rgba(var(--tint-rgb), 0.05);
     border-radius: 10px;
     border: var(--border-main);
     margin-left: 10px;
@@ -98,7 +102,7 @@ body {
 /* Демонстрация / просмотр в полноэкранном режиме (fix) */
 .gradientContainer_bfe55a {
     background-image: linear-gradient(
-        rgba(255, 255, 255, 0.04) 0%,
+        rgba(var(--tint-rgb), 0.04) 0%,
         rgba(0, 0, 0, 0) 50%
     );
 }
@@ -120,7 +124,7 @@ body {
  
 /* Индикатор говорящего */
 .border__2f4f7.speaking__2f4f7 {
-    box-shadow: 0px 0px 30px 10px rgba(255, 255, 255, 0.2) inset;
+    box-shadow: 0px 0px 30px 10px rgba(var(--tint-rgb), 0.2) inset;
 }
  
  
@@ -129,7 +133,7 @@ body {
    ========================================================================== */
  
 .menu_c1e9c4 {
-    background: rgba(0, 0, 0, 0.158);
+    background: rgba(0, 0, 0, 0.158);   /* тёмный фон меню — можно заменить на rgba(var(--tint-rgb),0.158) для полной тонировки */
     border: var(--border-main);
 }
  
@@ -176,7 +180,7 @@ body {
  
 /* Тултипы реакций на сервере */
 .reactionTooltip_b49891 {
-    background: rgba(255, 255, 255, 0) !important;
+    background: rgba(var(--tint-rgb), 0) !important;
     backdrop-filter: blur(var(--blur-other));
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
@@ -188,7 +192,7 @@ body {
  
 /* Баннер (верх профиля) */
 .banner__68edb {
-    background: rgba(255, 255, 255, 0.05) !important;
+    background: rgba(var(--tint-rgb), 0.05) !important;
 }
  
 /* Фон модалки профиля и ЛКМ */
@@ -201,7 +205,7 @@ body {
  
 .outer_c0bea0,
 .inner_c0bea0 {
-    background: rgba(255, 255, 255, 0.05) !important;
+    background: rgba(var(--tint-rgb), 0.05) !important;
 }
  
 /* Точка статуса на собственном профиле */
@@ -214,9 +218,9 @@ body {
     border: var(--border-main);
 }
  
-/* Боковая информация в профиле */
+/* Боковая информация в профиле (было rgba(145,145,145,0.1)) */
 :where(.overlay_c0bea0) {
-    background: rgba(145, 145, 145, 0.1);
+    background: rgba(var(--tint-rgb), 0.1);
     border: var(--border-main) !important;
 }
  
@@ -235,15 +239,14 @@ body {
  
 /* Скроллабельный контейнер */
 .scrollableContainer__74017 {
-    background: rgba(255, 255, 255, 0.03) !important;
+    background: rgba(var(--tint-rgb), 0.03) !important;
     border: var(--border-main);
     box-shadow: var(--boxshadow);
 }
  
 /* Кнопка скачивания файла (hover-группа) */
-/* (объединено: было два отдельных правила в исходнике) */
 .hoverButtonGroup__06ab4 {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(var(--tint-rgb), 0.1);
     border: var(--border-main) !important;
     backdrop-filter: blur(var(--blur-other));
     box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.3);
@@ -256,7 +259,7 @@ body {
  
 .visual-refresh .messagesPopoutWrap_e8b59c,
 .visual-refresh .messageGroupWrapper_e8b59c {
-    background: rgba(120, 120, 120, 0.1);
+    background: rgba(var(--tint-rgb), 0.1);   /* было rgba(120,120,120,0.1) */
     backdrop-filter: blur(10px);
 }
  
@@ -281,7 +284,7 @@ body {
  
 /* --- Нижняя панель: статус звонка и т.д. --- */
 .visual-refresh .panels__5e434 {
-    background: rgba(255, 255, 255, 0.03) !important;
+    background: rgba(var(--tint-rgb), 0.03) !important;
     border: var(--border-main) !important;
     backdrop-filter: blur(var(--blur-bg));
     box-shadow: var(--boxshadow);
@@ -322,10 +325,10 @@ button.vc-ranb-button.button__201d5.lookFilled__201d5.sizeMin__201d5.grow__201d5
  
 /* Чекбокс (отмеченный) */
 .container__3f21e.checked__3f21e {
-    background-color: rgba(255, 255, 255, 0.24) !important;
+    background-color: rgba(var(--tint-rgb), 0.24) !important;
 }
  
-/* Нажатые кнопки (фиолетово-розовый градиент) */
+/* Нажатые кнопки (фиолетово-розовый градиент) — оставлен как есть */
 :where(.visual-refresh) .checkbox_f525d3.checked_f525d3 {
     background:
         radial-gradient(90.42% 100% at 50% 100%, rgba(226, 135, 135, 0.5) 60%, transparent 100%),
@@ -338,7 +341,7 @@ button.vc-ranb-button.button__201d5.lookFilled__201d5.sizeMin__201d5.grow__201d5
    13. ПРОГРЕСС-БАРЫ И ИНДИКАТОРЫ
    ========================================================================== */
  
-/* Прогресс-бар громкости (золотой градиент) */
+/* Прогресс-бар громкости (золотой градиент) — оставлен как есть */
 .barFill_a562c8 {
     background:
         radial-gradient(ellipse farthest-corner at right bottom,
@@ -364,7 +367,7 @@ button.vc-ranb-button.button__201d5.lookFilled__201d5.sizeMin__201d5.grow__201d5
 /* Низ / верх */
 .border_a55fdc,
 .modalFooter_a55fdc {
-    background-color: rgba(255, 255, 255, 0.05) !important;
+    background-color: rgba(var(--tint-rgb), 0.05) !important;
     backdrop-filter: blur(20px);
 }
  
@@ -378,14 +381,14 @@ button.vc-ranb-button.button__201d5.lookFilled__201d5.sizeMin__201d5.grow__201d5
  
 /* --- Смена региона --- */
 .quickSelectPopout_ebaca5 {
-    background: rgba(255, 255, 255, 0.15) !important;
+    background: rgba(var(--tint-rgb), 0.15) !important;
     backdrop-filter: blur(10px);
 }
  
  
 /* --- MessageBox --- */
 .root__49fc1 {
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(var(--tint-rgb), 0.15);
     backdrop-filter: blur(10px);
 }
  
@@ -394,6 +397,6 @@ button.vc-ranb-button.button__201d5.lookFilled__201d5.sizeMin__201d5.grow__201d5
 }
  
  .container_abd9a8{
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(var(--tint-rgb), 0.05);
     backdrop-filter: blur(10px);
  }
